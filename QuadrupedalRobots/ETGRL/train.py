@@ -157,7 +157,7 @@ def run_train_episode(agent, env, rpm,max_step,action_bound,w=None,b=None):
             action = agent.sample(obs)
         new_action = act2ract(action)
         # Perform action
-        next_obs, reward, done, info = env.step(new_action*action_bound,donef=(episode_steps>max_step))
+        next_obs, reward, done, info = env.step(new_action*action_bound)
         terminal = float(done) if episode_steps < 2000 else 0
         terminal = 1. - terminal
         for key in Param_Dict.keys():
@@ -239,7 +239,7 @@ def run_EStrain_episode(agent, env, rpm,max_step,action_bound,w=None,b=None):
         action = agent.predict(obs)
         new_action = act2ract(action)
         # Perform action
-        next_obs, reward, done, info = env.step(new_action*action_bound,donef=(episode_steps>max_step))
+        next_obs, reward, done, info = env.step(new_action*action_bound)
         terminal = float(done) if episode_steps < 2000 else 0
         terminal = 1. - terminal
         for key in Param_Dict.keys():
