@@ -16,7 +16,7 @@ import torch
 import numpy as np
 import gym
 import argparse
-import rlschool
+import rlschool.quadrupedal
 from parl.utils import logger, summary, ReplayMemory
 from model.mujoco_model import MujocoModel
 from model.mujoco_agent import MujocoAgent
@@ -78,6 +78,17 @@ def LS_sol(A,b,precision=1e-4,alpha=0.05,lamb=1,w0=None):
         i += 1
     return x
 
+def act2ract(action):
+    if args.half_act:
+        new_action = np.zeros(12)
+        new_action[:3] = copy(action[:3])
+        new_action[3:6] = copy(action[:3])
+        new_action[6:9] = copy(action[3:6])
+        new_action[9:] = copy(action[3:6])
+        return new_action
+    else:
+        return copy(action)
+
 def Opt_with_points(ETG,ETG_T=0.4,points=None,b0=None,w0=None,precision=1e-4,lamb=0.5,plot=False,**kwargs):
     ts = [0.5*ETG_T+0.1,0,0.05,0.1,0.15,0.2]
     if points is None:
@@ -128,6 +139,8 @@ def param2dynamic_dict(params):
 # Run episode for training
 def run_train_episode(agent, env, rpm,max_step,action_bound,w=None,b=None):
     action_dim = env.action_space.shape[0]
+    if args.half_act:
+        action_dim = 6
     obs,info = env.reset(ETG_w=w,ETG_b=b,x_noise=args.x_noise)
     done = False
     episode_reward, episode_steps = 0, 0
@@ -142,7 +155,7 @@ def run_train_episode(agent, env, rpm,max_step,action_bound,w=None,b=None):
             action = np.random.uniform(-1, 1, size=action_dim)
         else:
             action = agent.sample(obs)
-        new_action = copy(action)
+        new_action = act2ract(action)
         # Perform action
         next_obs, reward, done, info = env.step(new_action*action_bound,donef=(episode_steps>max_step))
         terminal = float(done) if episode_steps < 2000 else 0
@@ -191,8 +204,9 @@ def run_evaluate_episodes(agent, env,max_step,action_bound,w=None,b=None):
         if args.eval:
             t0 = time.clock()
         action = agent.predict(obs)
-        new_action = action
-        obs, reward, done, info = env.step(new_action*action_bound,donef=(steps>max_step))
+        new_action = act2ract(action)
+        # obs, reward, done, info = env.step(new_action*action_bound,donef=(steps>max_step))
+        obs, reward, done, info = env.step(new_action*action_bound)
         if args.eval == 1:
             img=p.getCameraImage(640, 480, renderer=p.ER_BULLET_HARDWARE_OPENGL)[2]
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB ) 
@@ -223,7 +237,7 @@ def run_EStrain_episode(agent, env, rpm,max_step,action_bound,w=None,b=None):
         episode_steps += 1
         # Select action randomly or according to policy
         action = agent.predict(obs)
-        new_action = copy(action)
+        new_action = act2ract(action)
         # Perform action
         next_obs, reward, done, info = env.step(new_action*action_bound,donef=(episode_steps>max_step))
         terminal = float(done) if episode_steps < 2000 else 0
@@ -302,7 +316,7 @@ def main():
     dynamic_param = np.load("data/sigma0.5_exp0_dynamic_param9027.npy")
     dynamic_param = param2dynamic_dict(dynamic_param)
 
-    env =  rlschool.make_env('Quadrupedal',task=args.task_mode,motor_control_mode=mode,render=render,sensor_mode=sensor_mode,
+    env =  gym.make('quadrupedal-v0',task=args.task_mode,motor_control_mode=mode,render=render,sensor_mode=sensor_mode,
                         normal=args.normal,dynamic_param=dynamic_param,reward_param=param,
                         ETG=args.ETG,ETG_T=args.ETG_T,reward_p=args.reward_p,ETG_path=args.ETG_path,random_param=random_param,
                         ETG_H = args.ETG_H, vel_d = args.vel_d,step_y=args.step_y,
@@ -310,6 +324,8 @@ def main():
     e_step = args.e_step
     obs_dim = env.observation_space.shape[0]
     action_dim = env.action_space.shape[0]
+    if args.half_act:
+        action_dim = 6
     print('obs_dim:',obs_dim)
     act_bound_now = args.act_bound
     if args.act_mode == "pose":
@@ -503,6 +519,7 @@ if __name__ == "__main__":
     parser.add_argument("--ES",type=int,default=1)
     parser.add_argument("--es_rpm",type=int,default=1,help='ES training store into RPM for SAC')
     parser.add_argument("--x_noise",type=int,default=0)
+    parser.add_argument("--half_act",type=int,default=0,help='Half action')
     args = parser.parse_args()
 
     main()

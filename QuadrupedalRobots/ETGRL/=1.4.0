@@ -1,0 +1,54 @@
+Collecting parl
+  Downloading parl-2.0.2-py2.py3-none-any.whl (599 kB)
+Collecting click
+  Downloading click-8.0.3-py3-none-any.whl (97 kB)
+Collecting requests
+  Using cached requests-2.26.0-py2.py3-none-any.whl (62 kB)
+Collecting flask-cors
+  Downloading Flask_Cors-3.0.10-py2.py3-none-any.whl (14 kB)
+Collecting flask>=1.0.4
+  Downloading Flask-2.0.2-py3-none-any.whl (95 kB)
+Collecting tensorboardX==1.8
+  Downloading tensorboardX-1.8-py2.py3-none-any.whl (216 kB)
+Requirement already satisfied: scipy>=1.0.0 in /home/stone/.local/lib/python3.6/site-packages (from parl) (1.5.4)
+Collecting tb-nightly==1.15.0a20190801
+  Downloading tb_nightly-1.15.0a20190801-py3-none-any.whl (4.3 MB)
+Collecting cloudpickle==1.6.0
+  Downloading cloudpickle-1.6.0-py3-none-any.whl (23 kB)
+Requirement already satisfied: grpcio>=1.27.2 in /home/stone/.local/lib/python3.6/site-packages (from parl) (1.41.0)
+Collecting pyzmq==18.1.1
+  Downloading pyzmq-18.1.1-cp36-cp36m-manylinux1_x86_64.whl (1.1 MB)
+Collecting psutil>=5.6.2
+  Downloading psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
+Requirement already satisfied: protobuf>=3.14.0 in /home/stone/.local/lib/python3.6/site-packages (from parl) (3.18.1)
+Requirement already satisfied: termcolor>=1.1.0 in /home/stone/.local/lib/python3.6/site-packages (from parl) (1.1.0)
+Requirement already satisfied: werkzeug>=0.11.15 in /home/stone/.local/lib/python3.6/site-packages (from tb-nightly==1.15.0a20190801->parl) (2.0.2)
+Requirement already satisfied: markdown>=2.6.8 in /home/stone/.local/lib/python3.6/site-packages (from tb-nightly==1.15.0a20190801->parl) (3.3.4)
+Requirement already satisfied: absl-py>=0.4 in /home/stone/.local/lib/python3.6/site-packages (from tb-nightly==1.15.0a20190801->parl) (0.14.1)
+Requirement already satisfied: wheel>=0.26 in /home/stone/anaconda3/envs/quadrupedal/lib/python3.6/site-packages (from tb-nightly==1.15.0a20190801->parl) (0.37.0)
+Requirement already satisfied: six>=1.10.0 in /home/stone/anaconda3/envs/quadrupedal/lib/python3.6/site-packages (from tb-nightly==1.15.0a20190801->parl) (1.16.0)
+Requirement already satisfied: numpy>=1.12.0 in /home/stone/.local/lib/python3.6/site-packages (from tb-nightly==1.15.0a20190801->parl) (1.19.5)
+Requirement already satisfied: setuptools>=41.0.0 in /home/stone/anaconda3/envs/quadrupedal/lib/python3.6/site-packages (from tb-nightly==1.15.0a20190801->parl) (58.0.4)
+Collecting itsdangerous>=2.0
+  Downloading itsdangerous-2.0.1-py3-none-any.whl (18 kB)
+Collecting Jinja2>=3.0
+  Downloading Jinja2-3.0.2-py3-none-any.whl (133 kB)
+Requirement already satisfied: importlib-metadata in /home/stone/.local/lib/python3.6/site-packages (from click->parl) (4.8.1)
+Collecting MarkupSafe>=2.0
+  Downloading MarkupSafe-2.0.1-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (30 kB)
+Requirement already satisfied: dataclasses in /home/stone/.local/lib/python3.6/site-packages (from werkzeug>=0.11.15->tb-nightly==1.15.0a20190801->parl) (0.8)
+Requirement already satisfied: zipp>=0.5 in /home/stone/.local/lib/python3.6/site-packages (from importlib-metadata->click->parl) (3.6.0)
+Requirement already satisfied: typing-extensions>=3.6.4 in /home/stone/anaconda3/envs/quadrupedal/lib/python3.6/site-packages (from importlib-metadata->click->parl) (3.10.0.2)
+Collecting idna<4,>=2.5
+  Downloading idna-3.3-py3-none-any.whl (61 kB)
+Collecting charset-normalizer~=2.0.0
+  Downloading charset_normalizer-2.0.7-py3-none-any.whl (38 kB)
+Requirement already satisfied: certifi>=2017.4.17 in /home/stone/anaconda3/envs/quadrupedal/lib/python3.6/site-packages (from requests->parl) (2020.12.5)
+Collecting urllib3<1.27,>=1.21.1
+  Using cached urllib3-1.26.7-py2.py3-none-any.whl (138 kB)
+Installing collected packages: MarkupSafe, Jinja2, itsdangerous, click, urllib3, idna, flask, charset-normalizer, tensorboardX, tb-nightly, requests, pyzmq, psutil, flask-cors, cloudpickle, parl
+  Attempting uninstall: cloudpickle
+    Found existing installation: cloudpickle 2.0.0
+    Uninstalling cloudpickle-2.0.0:
+      Successfully uninstalled cloudpickle-2.0.0
+Successfully installed Jinja2-3.0.2 MarkupSafe-2.0.1 charset-normalizer-2.0.7 click-8.0.3 cloudpickle-1.6.0 flask-2.0.2 flask-cors-3.0.10 idna-3.3 itsdangerous-2.0.1 parl-2.0.2 psutil-5.8.0 pyzmq-18.1.1 requests-2.26.0 tb-nightly-1.15.0a20190801 tensorboardX-1.8 urllib3-1.26.7
